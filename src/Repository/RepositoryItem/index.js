@@ -1,10 +1,23 @@
-import React from 'react';
- 
-import Link from '../../Link';
- 
-import '../style.css';
- 
+import React from "react";
+import gql from "graphql-tag";
+import Link from "../../Link";
+import Button from "../../Button";
+import { Mutation } from "react-apollo";
+import "../style.css";
+
+const STAR_REPOSITORY = gql`
+  mutation($id: ID!) {
+    addStar(input: { starrableId: $id }) {
+      starrable {
+        id
+        viewerHasStarred
+      }
+    }
+  }
+`;
+
 const RepositoryItem = ({
+  id,
   name,
   url,
   descriptionHTML,
@@ -20,12 +33,26 @@ const RepositoryItem = ({
       <h2>
         <Link href={url}>{name}</Link>
       </h2>
- 
-      <div className="RepositoryItem-title-action">
-        {stargazers.totalCount} Stars
+
+      <div>
+        {!viewerHasStarred ? (
+          <Mutation mutation={STAR_REPOSITORY} variables={{ id }}>
+            {(addStar, { data, loading, error }) => (
+              <Button
+                className={"RepositoryItem-title-action"}
+                onClick={addStar}
+              >
+                {stargazers.totalCount} Star
+              </Button>
+            )}
+          </Mutation>
+        ) : (
+          <span>Remove Button</span>
+        )}
       </div>
+      <div>update subscription mutation</div>
     </div>
- 
+
     <div className="RepositoryItem-description">
       <div
         className="RepositoryItem-description-info"
@@ -33,9 +60,7 @@ const RepositoryItem = ({
       />
       <div className="RepositoryItem-description-details">
         <div>
-          {primaryLanguage && (
-            <span>Language: {primaryLanguage.name}</span>
-          )}
+          {primaryLanguage && <span>Language: {primaryLanguage.name}</span>}
         </div>
         <div>
           {owner && (
@@ -48,5 +73,5 @@ const RepositoryItem = ({
     </div>
   </div>
 );
- 
+
 export default RepositoryItem;
