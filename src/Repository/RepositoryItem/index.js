@@ -76,7 +76,7 @@ const updateWatch = (
   },
 ) => {
   const repository = client.readFragment({
-    id: `Repository:${id}`,
+    id:`Repository:${id}`,
     fragment: REPOSITORY_FRAGMENT,
   });
 
