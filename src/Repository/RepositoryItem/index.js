@@ -38,9 +38,6 @@ const updateAddStar = (
     id: `Repository:${id}`,
     fragment: REPOSITORY_FRAGMENT,
   });
- 
-  //Log repo
-  console.log(repository)
 
   const totalCount = repository.stargazers.totalCount + 1;
  
@@ -79,9 +76,6 @@ const updateWatch = (
     id:`Repository:${id}`,
     fragment: REPOSITORY_FRAGMENT,
   });
-
-  //log repo return null
-  console.log(repository);
 
   let { totalCount } = repository.watchers;
   totalCount =
