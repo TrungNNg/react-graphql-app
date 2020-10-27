@@ -4,6 +4,7 @@ import Organization from '../Organization'
 import Navigation from './Navigation';
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import * as routes from '../constants/routes'
+import './style.css'
 
 class App extends React.Component {
     state = {
